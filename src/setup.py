@@ -1,4 +1,4 @@
-#!/usr/local/bin/env python3
+#!/usr/local/bin/python3
 import os
 import shutil
 
@@ -7,6 +7,7 @@ cwd = os.getcwd()
 try:
     os.mkdir(os.path.join(cwd, '01_Submitted'))
 except:
+    print(cwd)
     print('Directory already exists')
 try:
     os.mkdir(os.path.join(cwd, '02_Analyzed'))
@@ -17,7 +18,15 @@ try:
 except:
     print('Directory already exists')
 try:
-    os.mkdir(os.path.join(cwd, 'Threshold2'))
+    os.mkdir(os.path.join(cwd, 'ManualAnalysis'))
+except:
+    print('Directory already exists')
+try:
+    os.mkdir(os.path.join(cwd, 'ManualAnalysis/Threshold2'))
+except:
+    print('Directory already exists')
+try:
+    os.mkdir(os.path.join(cwd, 'ManualAnalysis/Registration'))
 except:
     print('Directory already exists')
 
