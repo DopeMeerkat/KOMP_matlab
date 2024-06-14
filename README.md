@@ -1,4 +1,10 @@
-# Instructions
+# Dependencies
+- python3 version > 3.11
+- matlab
+- matlabengine `$ python -m pip install matlabengine==24.1.2`
+
+# Instructions for Mac
+- change the path for where the source is located in `setup.py`
 - run `setup.command`, this will create a directory in the current folder named `CCC_EX_hF`
 - rename the folder so that it matches the images. i.e. images are named `CCC_E11_hF_ML3_s2_2_shift3.jpg` so folder should be named `CCC_E11_hF`
 - open the `00_Scripts` folder found in the directory just created

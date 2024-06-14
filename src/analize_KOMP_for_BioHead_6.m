@@ -182,10 +182,10 @@ area_roi_tb=800;
 
 std_const=2;
 days2_1=4;                         % days between injection 2 and injection 1 (for labels)
-%dis_5x=312;                    % 312 pixels in 5x --> 400 um
-% dis_5x=round(312*rat_mouse);                    % 312 pixels in 5x --> 400 um
+% dis_5x=312;                    % 312 pixels in 5x --> 400 um
+dis_5x=round(312*rat_mouse);                    % 312 pixels in 5x --> 400 um
 % dis_5x=round(624*rat_mouse);                    % 312 pixels in 5x --> 400 um
-dis_5x=round((144*4)*rat_mouse);                    % 576 pixels in 5x --> 400 um
+% dis_5x=round((144*4)*rat_mouse);                    % 576 pixels in 5x --> 400 um
 % dis_10x=round(dis_5x*2/ratio);              % 312*2 pixels in 10x --> 400 um (based on the image 'C:\Users\shhong\Desktop\CJake\scale.jpg')
 
 dis_10x=round(dis_5x*2/ratio);              % 312*2 pixels in 10x --> 400 um (based on the image 'C:\Users\shhong\Desktop\CJake\scale.jpg')
