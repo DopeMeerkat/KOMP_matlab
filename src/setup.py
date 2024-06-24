@@ -33,6 +33,11 @@ try:
 except:
     print('Directory already exists')
 
+try:
+    os.mkdir(os.path.join(cwd, 'CCC_EX_hF/ManualAnalysis/ROI'))
+except:
+    print('Directory already exists')
+
 #copying code
 # dir = '/Users/rowelab/Desktop/kevin/KOMP_matlab/src/'
 # for filename in os.listdir(dir): 
