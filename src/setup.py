@@ -4,8 +4,9 @@ import shutil
 
 #creating directories
 cwd = os.getcwd()
+sourceDir = os.path.join(cwd, 'src')
 
-shutil.copytree('/Users/rowelab/Desktop/kevin/KOMP_matlab/src', os.path.join(cwd, 'CCC_EX_hF'), copy_function= shutil.copy, dirs_exist_ok = True)
+shutil.copytree(sourceDir, os.path.join(cwd, 'CCC_EX_hF'), copy_function= shutil.copy, dirs_exist_ok = True)
 
 try:
     os.mkdir(os.path.join(cwd, 'CCC_EX_hF/01_Submitted'))
