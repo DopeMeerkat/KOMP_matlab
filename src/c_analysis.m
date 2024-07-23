@@ -3,13 +3,9 @@ for i=1:2
     for j=1:8
         for k=1:3
             n=n+1;
-            try
-                bt(n)=i;
-                bn(n)=j;
-                section(n)=k;
-            catch Except
-
-            end
+            bt(n)=i;
+            bn(n)=j;
+            section(n)=k;
 
         end
     end
