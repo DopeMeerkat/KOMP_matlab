@@ -62,7 +62,18 @@ else
     output_excel_file=[o_direct,'03_CalculatedData',delimeter,exp_name,'.xlsx'];
 end
 
-template='\\cse-3m58853\seh00004\Excel_template_withGraphs.xlsx';
+
+% remove hardcoded template file path
+scriptPath = mfilename('fullpath')
+[scriptDir, ~, ~] = fileparts(scriptPath);
+textFileName = 'dir_info.txt';
+filePath = fullfile(scriptDir, textFileName);
+fileID = fopen(filePath, 'r');
+template = [fgetl(fileID), 'Excel_template_withGraphs.xlsx'];
+fclose(fileID);
+% ~~~~~~~~~~~
+
+%template='/Users/rowelab/Desktop/ricky/redo_control/CCC_E11_hF/Excel_template_withGraphs.xlsx';
 if isempty(dir([o_direct,'03_CalculatedData',delimeter]))
     mkdir([o_direct,'03_CalculatedData',delimeter])
 end

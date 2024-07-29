@@ -12,15 +12,16 @@ from PIL import Image
 # - resolution decreased?
 
 Image.MAX_IMAGE_PIXELS = 200000000
-IMAGE_HEIGHT = 1100 # minimum height of image in pixels, change if needed based on device
-IMAGE_WIDTH = 600  # minimum width of image in pixels
+IMAGE_HEIGHT = 800 # minimum height of image in pixels, change if needed based on device
+IMAGE_WIDTH = 500  # minimum width of image in pixels
 
 class GraphicView(QtWidgets.QGraphicsView):
     rectChanged = QtCore.pyqtSignal(QtCore.QRect)
 
     def __init__(self, *args, **kwargs):
         QtWidgets.QGraphicsView.__init__(self, *args, **kwargs)
-        self.cursor = QtWidgets.QRubberBand(QtWidgets.QRubberBand.Rectangle, self)
+        self.cursor = None
+        # self.cursor = QtWidgets.QRubberBand(QtWidgets.QRubberBand.Rectangle, self)
         self.setMouseTracking(True)
         # self.origin = QtCore.QPoint()
         # self.changeRubberBand = False
@@ -38,11 +39,16 @@ class GraphicView(QtWidgets.QGraphicsView):
         self.brush = None
         self.updatePen()
 
-        self.cursor.show()
         
     def updatePen(self):
         self.pen = QtGui.QPen(self.penColor, 1, QtCore.Qt.SolidLine)
         self.brush = QtGui.QBrush(self.penColor)
+        # if self.penColor == QtCore.Qt.black:
+        #     self.cursor = QtGui.QCursor(QtGui.QPixmap('blackCursor.png').scaled(int(self.penSize/2), int(self.penSize/2)))
+        # else:
+        #     self.cursor = QtGui.QCursor(QtGui.QPixmap('whiteCursor.png').scaled(int(self.penSize/2), int(self.penSize/2)))
+        self.cursor = QtGui.QCursor(QtGui.QPixmap('whiteCursor.png').scaled(int(self.penSize), int(self.penSize)))
+        self.setCursor(self.cursor)
         # self.cursor.setGeometry(QtCore.QRect(0,0, self.penSize, self.penSize))
 
     def mousePressEvent(self, event):
@@ -53,15 +59,15 @@ class GraphicView(QtWidgets.QGraphicsView):
     def mouseMoveEvent(self, event):
         if event.buttons() and QtCore.Qt.LeftButton and self.drawing:
             # self.scene.addLine(QtCore.QLineF(self.lastPoint, event.pos()), self.pen)
-            self.scene.addRect(event.pos().x() - int(self.penSize / 2), 
+            self.scene.addEllipse(event.pos().x() - int(self.penSize / 2), 
                                 event.pos().y() - int(self.penSize / 2), 
                                 self.penSize, self.penSize, self.pen, brush = self.brush)
             self.lastPoint = event.pos()
             self.update()
         
-        self.cursor.setGeometry(QtCore.QRect(event.pos().x() - int(self.penSize / 2), 
-                                                event.pos().y() - int(self.penSize / 2), 
-                                                self.penSize, self.penSize))
+        # self.cursor.setGeometry(QtCore.QRect(event.pos().x() - int(self.penSize / 2), 
+        #                                         event.pos().y() - int(self.penSize / 2), 
+        #                                         self.penSize, self.penSize))
 
     def mouseReleaseEvent(self, event):
         if event.button == QtCore.Qt.LeftButton:
@@ -115,8 +121,8 @@ class ImageLoader(QtWidgets.QWidget):
         self.label2.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.label2.setAlignment(QtCore.Qt.AlignCenter)
 
-        self.loadImageButton = QtWidgets.QPushButton('Load image')
-        layout.addWidget(self.loadImageButton, 0, 0, 1, 2)
+        # self.loadImageButton = QtWidgets.QPushButton('Load image')
+        # layout.addWidget(self.loadImageButton, 0, 0, 1, 2)
 
         self.clearButton = QtWidgets.QPushButton('Clear')
         layout.addWidget(self.clearButton, 0, 2, 1, 1)
@@ -137,7 +143,7 @@ class ImageLoader(QtWidgets.QWidget):
         layout.addWidget(self.penDownButton, 2, 5, 1, 1)
 
         self.saveChangesButton = QtWidgets.QPushButton('Save changes')
-        layout.addWidget(self.saveChangesButton, 0, 6, 1, 2)
+        layout.addWidget(self.saveChangesButton, 0, 5, 1, 1)
 
 
 
@@ -155,7 +161,7 @@ class ImageLoader(QtWidgets.QWidget):
         self.prevImageButton.setMinimumSize(20,IMAGE_HEIGHT)
 
 
-        self.loadImageButton.clicked.connect(self.loadImage)
+        # self.loadImageButton.clicked.connect(self.loadImage)
         self.clearButton.clicked.connect(self.clearScene)
         self.scrapButton.clicked.connect(self.scrap)
         self.penWhiteButton.clicked.connect(self.penWhite)
@@ -175,10 +181,13 @@ class ImageLoader(QtWidgets.QWidget):
         self.pixmap = None
         self.pixmap2 = None
         self.dirname = ''
+        self.loadImage()
 
     def loadImage(self):
         self.clearScene()
-        self.dirname = QtWidgets.QFileDialog.getExistingDirectory(self, 'Select Folder')
+        # self.dirname = QtWidgets.QFileDialog.getExistingDirectory(self, 'Select Folder')
+        self.dirname = os.getcwd()
+        print(self.dirname)
         self.fileList = []
         self.regListList = []
         layerPath = os.path.join(self.dirname, os.path.join('01_Submitted', 'Layers'))
